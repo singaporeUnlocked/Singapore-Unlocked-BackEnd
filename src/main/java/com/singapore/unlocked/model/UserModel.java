@@ -13,16 +13,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "users")
 public class UserModel {
     @Id
-    private int id;
+    private String id;
 
     private String email;
     private String username;
     private String password;
 
-    public int getId() {
+    public String getId() {
     	return this.id;
     }
-    public void setId(int id) {
+    public void setId(String id) {
     	this.id = id;
     }
 
@@ -51,7 +51,7 @@ public class UserModel {
     }
 
     
-    public UserModel(int id, String email, String username, String password) {
+    public UserModel(String id, String email, String username, String password) {
         this.id = id;
         this.email = email;
         this.username = username;
