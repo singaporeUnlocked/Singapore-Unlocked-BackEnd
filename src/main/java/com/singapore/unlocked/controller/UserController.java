@@ -48,6 +48,7 @@ public class UserController
             }
             else
             {
+                
                 return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
             }
            
@@ -58,7 +59,14 @@ public class UserController
     @GetMapping("/patients")
     public List<PatientModel> getAllPatient()
     {
-        return patientRepo.findAll();
+            
+        
+        return patientRepo.patientsSummary();
+    }
+    @GetMapping("/patients/{id}")
+    public PatientModel getPatientByID(@PathVariable String id)
+    {
+        return patientRepo.findUserById(id);
     }
     
 
