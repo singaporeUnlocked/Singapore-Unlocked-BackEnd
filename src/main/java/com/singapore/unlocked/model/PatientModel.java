@@ -1,5 +1,10 @@
 package com.singapore.unlocked.model;
 
+import java.util.Hashtable;
+
+import com.mongodb.diagnostics.logging.Logger;
+
+import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -7,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.java.Log;
 
 @Data
 @AllArgsConstructor
@@ -111,7 +117,7 @@ public class PatientModel {
 
 
 
-    class GamesPlayed
+    public class GamesPlayed
     {
         @Field(value = "ImageMatching")
         ImageMatching imageMatching;
@@ -151,26 +157,19 @@ public class PatientModel {
             this.concentration = concentration;
 
         }
-
-      
-
-
-
-
-
-
-        class ImageMatching
+        public class ImageMatching
         {
-            @Field("NumberOfTimesPlayed")
+            @Field("Plays")
+            private Plays[] plays;
             private int numberOfTimesPlayed;
-            @Field("Level1")
-            private Level1 level1;
-            @Field("Level2")
-            private Level2 level2;
-            @Field("Level3")
-            private Level3 level3;
 
+            public Plays[] getPlays() {
+                return this.plays;
+            }
 
+            public void setPlays(Plays[] plays) {
+                this.plays = plays;
+            }
 
             public int getNumberOfTimesPlayed() {
                 return this.numberOfTimesPlayed;
@@ -180,167 +179,53 @@ public class PatientModel {
                 this.numberOfTimesPlayed = numberOfTimesPlayed;
             }
 
-            public Level1 getLevel1() {
-                return this.level1;
-            }
-
-            public void setLevel1(Level1 level1) {
-                this.level1 = level1;
-            }
-
-            public Level2 getLevel2() {
-                return this.level2;
-            }
-
-            public void setLevel2(Level2 level2) {
-                this.level2 = level2;
-            }
-
-            public Level3 getLevel3() {
-                return this.level3;
-            }
-
-            public void setLevel3(Level3 level3) {
-                this.level3 = level3;
-            }
-
-            public ImageMatching(int numberOfTimesPlayed, Level1 level1, Level2 level2, Level3 level3)
+            public ImageMatching(Plays[] plays, int numberOfTimesPlayed)
             {
+                this.plays = plays;
                 this.numberOfTimesPlayed = numberOfTimesPlayed;
-                this.level1 = level1;
-                this.level2 = level2;
-                this.level3 = level3;
-            }
-            
 
-        }
-        class SoundMatching
-        {
+            }
+
+
+            public void updateNumberOfTimesPlayedInLevel()
+            {
+               
+
+                Hashtable<Integer,Integer> playedCountDict = new Hashtable<Integer,Integer>();
+                for (Plays play : plays) 
+                {   
+                    if (playedCountDict.containsKey(play.getLevel()))
+                    {
+                        playedCountDict.put(play.getLevel(), playedCountDict.get(play.getLevel()) +1 );
+                    }
+                    else
+                    {
+                        playedCountDict.put(play.getLevel(), 1);
+                    }
+                }
+                for (Plays plays2 : plays) 
+                {
+                    if (playedCountDict.containsKey(plays2.getLevel()))
+                    {
+                        plays2.setTimesPlayedInLevel(playedCountDict.get(plays2.getLevel()));
+                    }
+                    
+                }
+
+            }
+
+
            
-            @Field("NumberofTimesPlayed")
-            private int numberOfTimesPlayed;
-            @Field("Level1")
-            private Level1 level1;
-            @Field("Level2")
-            private Level2 level2;
-            @Field("Level3")
-            private Level3 level3;
 
 
-
-            public int getNumberOfTimesPlayed() {
-                return this.numberOfTimesPlayed;
-            }
-
-            public void setNumberOfTimesPlayed(int numberOfTimesPlayed) {
-                this.numberOfTimesPlayed = numberOfTimesPlayed;
-            }
-
-            public Level1 getLevel1() {
-                return this.level1;
-            }
-
-            public void setLevel1(Level1 level1) {
-                this.level1 = level1;
-            }
-
-            public Level2 getLevel2() {
-                return this.level2;
-            }
-
-            public void setLevel2(Level2 level2) {
-                this.level2 = level2;
-            }
-
-            public Level3 getLevel3() {
-                return this.level3;
-            }
-
-            public void setLevel3(Level3 level3) {
-                this.level3 = level3;
-            }
-
-            public SoundMatching(int numberOfTimesPlayed, Level1 level1, Level2 level2, Level3 level3)
-            {
-                this.numberOfTimesPlayed = numberOfTimesPlayed;
-                this.level1 = level1;
-                this.level2 = level2;
-                this.level3 = level3;
-            }
 
 
         }
-        class Concentration
+        public class SoundMatching
         {
-            @Field("NumberofTimesPlayed")
-            private int numberOfTimesPlayed;
-            @Field("Level1")
-            private Level1 level1;
-            @Field("Level2")
-            private Level2 level2;
-            @Field("Level3")
-            private Level3 level3;
-
-
-
-            public int getNumberOfTimesPlayed() {
-                return this.numberOfTimesPlayed;
-            }
-
-            public void setNumberOfTimesPlayed(int numberOfTimesPlayed) {
-                this.numberOfTimesPlayed = numberOfTimesPlayed;
-            }
-
-            public Level1 getLevel1() {
-                return this.level1;
-            }
-
-            public void setLevel1(Level1 level1) {
-                this.level1 = level1;
-            }
-
-            public Level2 getLevel2() {
-                return this.level2;
-            }
-
-            public void setLevel2(Level2 level2) {
-                this.level2 = level2;
-            }
-
-            public Level3 getLevel3() {
-                return this.level3;
-            }
-
-            public void setLevel3(Level3 level3) {
-                this.level3 = level3;
-            }
-
-            public Concentration(int numberOfTimesPlayed, Level1 level1, Level2 level2, Level3 level3)
-            {
-                this.numberOfTimesPlayed = numberOfTimesPlayed;
-                this.level1 = level1;
-                this.level2 = level2;
-                this.level3 = level3;
-            }
-
-        }
-
-
-        class Level1
-        {
-
-            @Field("NumberofTimesPlayed")
-            private int numberOfTimesPlayed;
-            @Field("Plays") 
+            @Field("Plays")
             private Plays[] plays;
-
-            public int getNumberOfTimesPlayed() {
-                return this.numberOfTimesPlayed;
-            }
-
-            public void setNumberOfTimesPlayed(int numberOfTimesPlayed) {
-                this.numberOfTimesPlayed = numberOfTimesPlayed;
-            }
+            private int numberOfTimesPlayed;
 
             public Plays[] getPlays() {
                 return this.plays;
@@ -350,21 +235,6 @@ public class PatientModel {
                 this.plays = plays;
             }
 
-
-            public Level1(int numberOfTimesPlayed, Plays[] plays)
-            {
-                this.numberOfTimesPlayed = numberOfTimesPlayed;
-                this.plays = plays;
-            }
-
-        }
-        class Level2
-        {
-            @Field("NumberofTimesPlayed")
-            private int numberOfTimesPlayed;
-            @Field("Plays") 
-            private Plays[] plays;
-
             public int getNumberOfTimesPlayed() {
                 return this.numberOfTimesPlayed;
             }
@@ -373,64 +243,126 @@ public class PatientModel {
                 this.numberOfTimesPlayed = numberOfTimesPlayed;
             }
 
-            public Plays[] getPlays() {
-                return this.plays;
-            }
-
-            public void setPlays(Plays[] plays) {
-                this.plays = plays;
-            }
-
-
-            public Level2(int numberOfTimesPlayed, Plays[] plays)
+            public SoundMatching(Plays[] plays, int numberOfTimesPlayed)
             {
-                this.numberOfTimesPlayed = numberOfTimesPlayed;
                 this.plays = plays;
-            }
-        }
-        class Level3
-        {
-            @Field("NumberofTimesPlayed")
-            private int numberOfTimesPlayed;
-            @Field("Plays") 
-            private Plays[] plays;
-
-            public int getNumberOfTimesPlayed() {
-                return this.numberOfTimesPlayed;
-            }
-
-            public void setNumberOfTimesPlayed(int numberOfTimesPlayed) {
                 this.numberOfTimesPlayed = numberOfTimesPlayed;
+
             }
-
-            public Plays[] getPlays() {
-                return this.plays;
-            }
-
-            public void setPlays(Plays[] plays) {
-                this.plays = plays;
-            }
-
-
-            public Level3(int numberOfTimesPlayed, Plays[] plays)
+            public void updateNumberOfTimesPlayedInLevel()
             {
-                this.numberOfTimesPlayed = numberOfTimesPlayed;
-                this.plays = plays;
+                Hashtable<Integer,Integer> playedCountDict = new Hashtable<Integer,Integer>();
+                for (Plays play : plays) 
+                {
+                    if (playedCountDict.containsKey(play.getLevel()))
+                    {
+                        playedCountDict.put(play.getLevel(), playedCountDict.get(play.getLevel()) +1 );
+                    }
+                    else
+                    {
+                        playedCountDict.put(play.getLevel(), 1);
+                    }
+                }
+                for (Plays plays2 : plays) 
+                {
+                    if (playedCountDict.containsKey(plays2.getLevel()))
+                    {
+                        plays2.setTimesPlayedInLevel(playedCountDict.get(plays2.getLevel()));
+                    }
+                    
+                }
+
             }
-        }
 
-
-        class Plays
-        {
+           
           
 
 
+        }
+        public class Concentration
+        {
+            @Field("Plays")
+            private Plays[] plays;
+            private int numberOfTimesPlayed;
+           
+            public Plays[] getPlays() {
+                return this.plays;
+            }
+
+            public void setPlays(Plays[] plays) {
+                this.plays = plays;
+            }
+
+            public int getNumberOfTimesPlayed() {
+                return this.numberOfTimesPlayed;
+            }
+
+            public void setNumberOfTimesPlayed(int numberOfTimesPlayed) {
+                this.numberOfTimesPlayed = numberOfTimesPlayed;
+            }
+
+            public Concentration(Plays[] plays, int numberOfTimesPlayed)
+            {
+                this.plays = plays;
+                this.numberOfTimesPlayed = numberOfTimesPlayed;
+
+            }
+            public void updateNumberOfTimesPlayedInLevel()
+            {
+                Hashtable<Integer,Integer> playedCountDict = new Hashtable<Integer,Integer>();
+                for (Plays play : plays) 
+                {
+                    if (playedCountDict.containsKey(play.getLevel()))
+                    {
+                        playedCountDict.put(play.getLevel(), playedCountDict.get(play.getLevel()) +1 );
+                    }
+                    else
+                    {
+                        playedCountDict.put(play.getLevel(), 1);
+                    }
+                }
+                for (Plays plays2 : plays) 
+                {
+                    if (playedCountDict.containsKey(plays2.getLevel()))
+                    {
+                        plays2.setTimesPlayedInLevel(playedCountDict.get(plays2.getLevel()));
+                    }
+                    
+                }
+
+            }
+
+
+        }
+   
+        public class Plays
+        {
+          
             @Field("CurrentPlay")
             private int currentPlay;
             @Field("Time")
             private int time;
             @Field("Incorrect")
             private int incorrect;
+            @Field("Level")
+            private int level;
+            private int timesPlayedInLevel;
+
+            public int getTimesPlayedInLevel() {
+                return this.timesPlayedInLevel;
+            }
+
+            public void setTimesPlayedInLevel(int timesPlayedInLevel) {
+                this.timesPlayedInLevel = timesPlayedInLevel;
+            }
+
+            public int getLevel() {
+                return this.level;
+            }
+
+            public void setLevel(int level) {
+                this.level = level;
+            }
 
             public int getCurrentPlay() {
                 return this.currentPlay;
@@ -455,11 +387,13 @@ public class PatientModel {
             public void setIncorrect(int incorrect) {
                 this.incorrect = incorrect;
             }
-            public Plays(int currentPlay, int time, int incorrect)
+            public Plays(int currentPlay, int time, int incorrect, int level)
             {
                 this.currentPlay = currentPlay;
                 this.time = time;
                 this.incorrect = incorrect;
+                this.level = level;
+                
             }
 
 

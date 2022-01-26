@@ -14,5 +14,8 @@ public interface PatientRepository extends MongoRepository<PatientModel, String>
     
     @Query("{patientId:'?0'}")
     PatientModel findUserById(String id);
+
+    
+
     
 }
