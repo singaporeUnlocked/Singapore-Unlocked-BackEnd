@@ -1,5 +1,6 @@
 package com.singapore.unlocked.model;
 
+import java.sql.Date;
 import java.util.Hashtable;
 
 import com.mongodb.diagnostics.logging.Logger;
@@ -346,6 +347,17 @@ public class PatientModel {
             private int incorrect;
             @Field("Level")
             private int level;
+            @Field("Date")
+            private java.util.Date date;
+
+            public java.util.Date getDate() {
+                return this.date;
+            }
+
+            public void setDate(java.util.Date date) {
+                this.date = date;
+            }
+
             private int timesPlayedInLevel;
 
             public int getTimesPlayedInLevel() {
@@ -387,12 +399,13 @@ public class PatientModel {
             public void setIncorrect(int incorrect) {
                 this.incorrect = incorrect;
             }
-            public Plays(int currentPlay, int time, int incorrect, int level)
+            public Plays(int currentPlay, int time, int incorrect, int level, java.util.Date date)
             {
                 this.currentPlay = currentPlay;
                 this.time = time;
                 this.incorrect = incorrect;
                 this.level = level;
+                this.date = date;
                 
             }
 
