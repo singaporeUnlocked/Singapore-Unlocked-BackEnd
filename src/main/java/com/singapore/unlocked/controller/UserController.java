@@ -31,7 +31,7 @@ import com.singapore.unlocked.repository.UserRepository;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:1064", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:30199", allowedHeaders = "*", allowCredentials = "true")
 public class UserController
 {
     @Autowired
