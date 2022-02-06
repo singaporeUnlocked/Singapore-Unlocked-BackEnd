@@ -7,6 +7,7 @@ import com.mongodb.diagnostics.logging.Logger;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -16,7 +17,6 @@ import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "Patient")
 
@@ -105,6 +105,7 @@ public class PatientModel {
         this.gamesPlayed = gamesPlayed;
     }
 
+    @PersistenceConstructor
     public PatientModel(String id, String patientId, String name, double cognitiveRatings, double physicalRatings, double socialRatings, GamesPlayed gamesPlayed ) {
         this.id = id;
         this.patientId = patientId;
