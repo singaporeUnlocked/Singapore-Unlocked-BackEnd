@@ -120,6 +120,94 @@ public class PatientModel {
 
     public class GamesPlayed
     {
+        @Field(value = "SocialGames")
+        SocialGames socialGames;
+
+        @Field(value = "PhysicalGames")
+        PhysicalGames physicalGames;
+
+        @Field(value = "CognitiveGames")
+        CognitiveGames cognitiveGames;
+
+        public SocialGames getSocialGames() {
+            return this.socialGames;
+        }
+
+        public void setSocialGames(SocialGames socialGames) {
+            this.socialGames = socialGames;
+        }
+
+        public PhysicalGames getPhysicalGames() {
+            return this.physicalGames;
+        }
+
+        public void setPhysicalGames(PhysicalGames physicalGames) {
+            this.physicalGames = physicalGames;
+        }
+
+        public CognitiveGames getCognitiveGames() {
+            return this.cognitiveGames;
+        }
+
+        public void setCognitiveGames(CognitiveGames cognitiveGames) {
+            this.cognitiveGames = cognitiveGames;
+        }
+
+        public GamesPlayed(SocialGames socialGames, PhysicalGames physicalGames, CognitiveGames cognitiveGames)
+        {
+            this.socialGames = socialGames;
+            this.physicalGames = physicalGames;
+            this.cognitiveGames = cognitiveGames;
+            
+
+        }
+       public class SocialGames
+       {
+            @Field(value = "ImageMatching")
+            ImageMatching imageMatching;
+
+            public ImageMatching getImageMatching() {
+                return this.imageMatching;
+            }
+
+            public void setImageMatching(ImageMatching imageMatching) {
+                this.imageMatching = imageMatching;
+            }
+
+
+
+
+            public SocialGames(ImageMatching imageMatching)
+            {
+                this.imageMatching = imageMatching;
+            }
+       }
+
+       public class PhysicalGames
+       {
+
+            @Field(value = "ImageMatching")
+            ImageMatching imageMatching;
+
+            public ImageMatching getImageMatching() {
+                return this.imageMatching;
+            }
+
+            public void setImageMatching(ImageMatching imageMatching) {
+                this.imageMatching = imageMatching;
+            }
+
+           public PhysicalGames(ImageMatching imageMatching)
+           {
+                this.imageMatching = imageMatching;
+           }
+
+
+        
+        
+       }
+       public class CognitiveGames
+       {
         @Field(value = "ImageMatching")
         ImageMatching imageMatching;
         @Field(value = "SoundMatching")
@@ -150,191 +238,194 @@ public class PatientModel {
         public void setConcentration(Concentration concentration) {
             this.concentration = concentration;
         }
-
-        public GamesPlayed(ImageMatching imageMatching, SoundMatching soundMatching, Concentration concentration)
+        public CognitiveGames(ImageMatching imageMatching, SoundMatching soundMatching, Concentration concentration)
         {
             this.imageMatching = imageMatching;
             this.soundMatching = soundMatching;
             this.concentration = concentration;
+        }
+    }
+
+
+    
+    public class ImageMatching
+    {
+        @Field("Plays")
+        private Plays[] plays;
+        private int numberOfTimesPlayed;
+
+        public Plays[] getPlays() {
+            return this.plays;
+        }
+
+        public void setPlays(Plays[] plays) {
+            this.plays = plays;
+        }
+
+        public int getNumberOfTimesPlayed() {
+            return this.numberOfTimesPlayed;
+        }
+
+        public void setNumberOfTimesPlayed(int numberOfTimesPlayed) {
+            this.numberOfTimesPlayed = numberOfTimesPlayed;
+        }
+
+        public ImageMatching(Plays[] plays, int numberOfTimesPlayed)
+        {
+            this.plays = plays;
+            this.numberOfTimesPlayed = numberOfTimesPlayed;
 
         }
-        public class ImageMatching
+
+
+        public void updateNumberOfTimesPlayedInLevel()
         {
-            @Field("Plays")
-            private Plays[] plays;
-            private int numberOfTimesPlayed;
-
-            public Plays[] getPlays() {
-                return this.plays;
-            }
-
-            public void setPlays(Plays[] plays) {
-                this.plays = plays;
-            }
-
-            public int getNumberOfTimesPlayed() {
-                return this.numberOfTimesPlayed;
-            }
-
-            public void setNumberOfTimesPlayed(int numberOfTimesPlayed) {
-                this.numberOfTimesPlayed = numberOfTimesPlayed;
-            }
-
-            public ImageMatching(Plays[] plays, int numberOfTimesPlayed)
-            {
-                this.plays = plays;
-                this.numberOfTimesPlayed = numberOfTimesPlayed;
-
-            }
-
-
-            public void updateNumberOfTimesPlayedInLevel()
-            {
-               
-
-                Hashtable<Integer,Integer> playedCountDict = new Hashtable<Integer,Integer>();
-                for (Plays play : plays) 
-                {   
-                    if (playedCountDict.containsKey(play.getLevel()))
-                    {
-                        playedCountDict.put(play.getLevel(), playedCountDict.get(play.getLevel()) +1 );
-                    }
-                    else
-                    {
-                        playedCountDict.put(play.getLevel(), 1);
-                    }
-                }
-                for (Plays plays2 : plays) 
-                {
-                    if (playedCountDict.containsKey(plays2.getLevel()))
-                    {
-                        plays2.setTimesPlayedInLevel(playedCountDict.get(plays2.getLevel()));
-                    }
-                    
-                }
-
-            }
-
-
            
 
-
-
+            Hashtable<Integer,Integer> playedCountDict = new Hashtable<Integer,Integer>();
+            for (Plays play : plays) 
+            {   
+                if (playedCountDict.containsKey(play.getLevel()))
+                {
+                    playedCountDict.put(play.getLevel(), playedCountDict.get(play.getLevel()) +1 );
+                }
+                else
+                {
+                    playedCountDict.put(play.getLevel(), 1);
+                }
+            }
+            for (Plays plays2 : plays) 
+            {
+                if (playedCountDict.containsKey(plays2.getLevel()))
+                {
+                    plays2.setTimesPlayedInLevel(playedCountDict.get(plays2.getLevel()));
+                }
+                
+            }
 
         }
-        public class SoundMatching
+
+
+       
+
+
+
+
+    }
+    public class SoundMatching
+    {
+        @Field("Plays")
+        private Plays[] plays;
+        private int numberOfTimesPlayed;
+
+        public Plays[] getPlays() {
+            return this.plays;
+        }
+
+        public void setPlays(Plays[] plays) {
+            this.plays = plays;
+        }
+
+        public int getNumberOfTimesPlayed() {
+            return this.numberOfTimesPlayed;
+        }
+
+        public void setNumberOfTimesPlayed(int numberOfTimesPlayed) {
+            this.numberOfTimesPlayed = numberOfTimesPlayed;
+        }
+
+        public SoundMatching(Plays[] plays, int numberOfTimesPlayed)
         {
-            @Field("Plays")
-            private Plays[] plays;
-            private int numberOfTimesPlayed;
-
-            public Plays[] getPlays() {
-                return this.plays;
-            }
-
-            public void setPlays(Plays[] plays) {
-                this.plays = plays;
-            }
-
-            public int getNumberOfTimesPlayed() {
-                return this.numberOfTimesPlayed;
-            }
-
-            public void setNumberOfTimesPlayed(int numberOfTimesPlayed) {
-                this.numberOfTimesPlayed = numberOfTimesPlayed;
-            }
-
-            public SoundMatching(Plays[] plays, int numberOfTimesPlayed)
-            {
-                this.plays = plays;
-                this.numberOfTimesPlayed = numberOfTimesPlayed;
-
-            }
-            public void updateNumberOfTimesPlayedInLevel()
-            {
-                Hashtable<Integer,Integer> playedCountDict = new Hashtable<Integer,Integer>();
-                for (Plays play : plays) 
-                {
-                    if (playedCountDict.containsKey(play.getLevel()))
-                    {
-                        playedCountDict.put(play.getLevel(), playedCountDict.get(play.getLevel()) +1 );
-                    }
-                    else
-                    {
-                        playedCountDict.put(play.getLevel(), 1);
-                    }
-                }
-                for (Plays plays2 : plays) 
-                {
-                    if (playedCountDict.containsKey(plays2.getLevel()))
-                    {
-                        plays2.setTimesPlayedInLevel(playedCountDict.get(plays2.getLevel()));
-                    }
-                    
-                }
-
-            }
-
-           
-          
-
+            this.plays = plays;
+            this.numberOfTimesPlayed = numberOfTimesPlayed;
 
         }
-        public class Concentration
+        public void updateNumberOfTimesPlayedInLevel()
         {
-            @Field("Plays")
-            private Plays[] plays;
-            private int numberOfTimesPlayed;
-           
-            public Plays[] getPlays() {
-                return this.plays;
-            }
-
-            public void setPlays(Plays[] plays) {
-                this.plays = plays;
-            }
-
-            public int getNumberOfTimesPlayed() {
-                return this.numberOfTimesPlayed;
-            }
-
-            public void setNumberOfTimesPlayed(int numberOfTimesPlayed) {
-                this.numberOfTimesPlayed = numberOfTimesPlayed;
-            }
-
-            public Concentration(Plays[] plays, int numberOfTimesPlayed)
+            Hashtable<Integer,Integer> playedCountDict = new Hashtable<Integer,Integer>();
+            for (Plays play : plays) 
             {
-                this.plays = plays;
-                this.numberOfTimesPlayed = numberOfTimesPlayed;
-
+                if (playedCountDict.containsKey(play.getLevel()))
+                {
+                    playedCountDict.put(play.getLevel(), playedCountDict.get(play.getLevel()) +1 );
+                }
+                else
+                {
+                    playedCountDict.put(play.getLevel(), 1);
+                }
             }
-            public void updateNumberOfTimesPlayedInLevel()
+            for (Plays plays2 : plays) 
             {
-                Hashtable<Integer,Integer> playedCountDict = new Hashtable<Integer,Integer>();
-                for (Plays play : plays) 
+                if (playedCountDict.containsKey(plays2.getLevel()))
                 {
-                    if (playedCountDict.containsKey(play.getLevel()))
-                    {
-                        playedCountDict.put(play.getLevel(), playedCountDict.get(play.getLevel()) +1 );
-                    }
-                    else
-                    {
-                        playedCountDict.put(play.getLevel(), 1);
-                    }
+                    plays2.setTimesPlayedInLevel(playedCountDict.get(plays2.getLevel()));
                 }
-                for (Plays plays2 : plays) 
-                {
-                    if (playedCountDict.containsKey(plays2.getLevel()))
-                    {
-                        plays2.setTimesPlayedInLevel(playedCountDict.get(plays2.getLevel()));
-                    }
-                    
-                }
-
+                
             }
-
 
         }
+
+       
+      
+
+
+    }
+    public class Concentration
+    {
+        @Field("Plays")
+        private Plays[] plays;
+        private int numberOfTimesPlayed;
+       
+        public Plays[] getPlays() {
+            return this.plays;
+        }
+
+        public void setPlays(Plays[] plays) {
+            this.plays = plays;
+        }
+
+        public int getNumberOfTimesPlayed() {
+            return this.numberOfTimesPlayed;
+        }
+
+        public void setNumberOfTimesPlayed(int numberOfTimesPlayed) {
+            this.numberOfTimesPlayed = numberOfTimesPlayed;
+        }
+
+        public Concentration(Plays[] plays, int numberOfTimesPlayed)
+        {
+            this.plays = plays;
+            this.numberOfTimesPlayed = numberOfTimesPlayed;
+
+        }
+        public void updateNumberOfTimesPlayedInLevel()
+        {
+            Hashtable<Integer,Integer> playedCountDict = new Hashtable<Integer,Integer>();
+            for (Plays play : plays) 
+            {
+                if (playedCountDict.containsKey(play.getLevel()))
+                {
+                    playedCountDict.put(play.getLevel(), playedCountDict.get(play.getLevel()) +1 );
+                }
+                else
+                {
+                    playedCountDict.put(play.getLevel(), 1);
+                }
+            }
+            for (Plays plays2 : plays) 
+            {
+                if (playedCountDict.containsKey(plays2.getLevel()))
+                {
+                    plays2.setTimesPlayedInLevel(playedCountDict.get(plays2.getLevel()));
+                }
+                
+            }
+
+        }
+
+
+    }
+
    
         public class Plays
         {

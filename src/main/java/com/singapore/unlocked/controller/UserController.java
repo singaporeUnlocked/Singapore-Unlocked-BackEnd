@@ -21,8 +21,10 @@ import javax.sound.midi.Soundbank;
 import com.singapore.unlocked.model.PatientModel;
 import com.singapore.unlocked.model.UserModel;
 import com.singapore.unlocked.model.PatientModel.GamesPlayed;
+import com.singapore.unlocked.model.PatientModel.GamesPlayed.CognitiveGames;
 import com.singapore.unlocked.model.PatientModel.GamesPlayed.Concentration;
 import com.singapore.unlocked.model.PatientModel.GamesPlayed.ImageMatching;
+import com.singapore.unlocked.model.PatientModel.GamesPlayed.PhysicalGames;
 import com.singapore.unlocked.model.PatientModel.GamesPlayed.Plays;
 import com.singapore.unlocked.model.PatientModel.GamesPlayed.SoundMatching;
 import com.singapore.unlocked.repository.PatientRepository;
@@ -30,7 +32,6 @@ import com.singapore.unlocked.repository.UserRepository;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:1064", allowedHeaders = "*", allowCredentials = "true")
 public class UserController
 {
     @Autowired
@@ -77,9 +78,10 @@ public class UserController
     {
         PatientModel patientModel = patientRepo.findUserById(id);
         GamesPlayed gamesPlayed = patientModel.getGamesPlayed();
-        ImageMatching imageMatching = gamesPlayed.getImageMatching();
-        SoundMatching soundMatching = gamesPlayed.getSoundMatching();
-        Concentration concentration = gamesPlayed.getConcentration();
+        CognitiveGames cognitiveGames = gamesPlayed.getCognitiveGames();
+        ImageMatching imageMatching = cognitiveGames.getImageMatching();
+        SoundMatching soundMatching = cognitiveGames.getSoundMatching();
+        Concentration concentration = cognitiveGames.getConcentration();
         Plays[] imageMatchingPlays = imageMatching.getPlays();
         Plays[] soundMatchingPlays = soundMatching.getPlays();
         Plays[] concentrationPlays = concentration.getPlays();
